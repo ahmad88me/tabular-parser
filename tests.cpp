@@ -8,6 +8,10 @@ using namespace std;
 
 namespace {
 
+    TEST(ParserTest, TestFail){
+	EXPECT_EQ(0,1);
+    }
+
     TEST(ParserTest, TestSetup) {
         EXPECT_EQ(1,1);
     }
