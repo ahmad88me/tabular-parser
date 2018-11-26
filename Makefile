@@ -1,6 +1,7 @@
 CC = g++
 CFLAGS= -std=c++11
-
+LIB = -pthread  
+TLIB = $(LIB) -lgtest
 
 parser.out: parser.o main.o
 	$(CC) $(CFLAGS) -o parser.out parser.o main.o
@@ -12,7 +13,7 @@ main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 
-.PHONY: clean install lib libmac liblinux example cov codecov
+.PHONY: clean install lib libmac liblinux example cov covnoclean codecov
 
 example:
 	$(CC) $(CFLAGS) -o example.out parser.cpp example.cpp
@@ -35,6 +36,18 @@ install:
 	mv libtabularparser.so.1.0 /usr/local/lib/
 	ln -fs /usr/local/lib/libtabularparser.so.1.0 /usr/local/lib/libtabularparser.so
 	echo -e "tabular parser is installed"
+	$(MAKE) clean
+
+covnoclean:
+	$(CC) ${CFLAGS}  -c -fprofile-arcs -ftest-coverage -fPIC parser.cpp tests.cpp
+	$(CC) -o covapp  -fprofile-arcs -ftest-coverage parser.o tests.o $(TLIB) 
+	./covapp
+	lcov --directory . --capture --output-file coverage.info
+	lcov --remove coverage.info '/usr/*' --output-file coverage.info
+	lcov --list coverage.info
+
+cov:
+	$(MAKE) covnoclean
 	$(MAKE) clean
 
 codecov:

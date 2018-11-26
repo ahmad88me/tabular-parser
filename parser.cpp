@@ -50,6 +50,7 @@ std::list<std::list<string>*>* Parser::parse(){
                 }
                 cout<<endl;
             }
+	return cols;	
     }
     else{
         cout << "Error opening the file\n";
