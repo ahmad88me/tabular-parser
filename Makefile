@@ -12,7 +12,7 @@ main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 
-.PHONY: clean install lib libmac liblinux example
+.PHONY: clean install lib libmac liblinux example cov codecov
 
 example:
 	$(CC) $(CFLAGS) -o example.out parser.cpp example.cpp
@@ -35,6 +35,14 @@ install:
 	mv libtabularparser.so.1.0 /usr/local/lib/
 	ln -fs /usr/local/lib/libtabularparser.so.1.0 /usr/local/lib/libtabularparser.so
 	echo -e "tabular parser is installed"
+	$(MAKE) clean
+
+codecov:
+	$(MAKE) covnoclean
+	curl -s https://codecov.io/bash > codecovpush.sh
+	chmod +x codecovpush.sh
+	./codecovpush.sh
+	rm codecovpush.sh
 	$(MAKE) clean
 
 clean:
