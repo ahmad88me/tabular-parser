@@ -13,6 +13,18 @@ main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	LIBCMAKETARGET := liblinux
+	DETECTEDOS := Linux
+endif
+
+ifeq  ($(UNAME_S),Darwin)
+	DETECTEDOS := MacOS
+	LIBCMAKETARGET := libmac
+endif
+
+
 .PHONY: clean install lib libmac liblinux example cov covnoclean codecov
 
 example:
