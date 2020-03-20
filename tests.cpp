@@ -26,11 +26,11 @@ namespace {
     TEST(ParserTest, Vertical) {
         std::list<std::list<string>*>* data;
         Parser parser("test.csv");
-        data = parser.parse();
+        data = parser.parse_vertical();
         cout<< "\n\n data size: ";
         cout << data->size() << endl;
-        EXPECT_EQ(3, data->size());
-        EXPECT_EQ(4, (*(data->cbegin()))->size());
+        EXPECT_EQ(4, data->size());
+        EXPECT_EQ(3, (*(data->cbegin()))->size());
     }
 
 }// namespace

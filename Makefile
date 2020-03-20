@@ -3,6 +3,7 @@ CFLAGS= -std=c++11
 LIB = -pthread  
 TLIB = $(LIB) -lgtest
 
+COVCLEANFILES = gcov.css snow.png ruby.png *.gcov  *.gcda *.gcno index-sort-f.html index-sort-l.html index.html amber.png glass.png updown.png coverage.info emerald.png Users usr v1\
 
 parser.out: parser.o main.o
 	$(CC) $(CFLAGS) -o parser.out parser.o main.o
@@ -57,6 +58,7 @@ covnoclean:
 	./covapp
 	lcov --directory . --capture --output-file coverage.info
 	lcov --remove coverage.info '/usr/*' --output-file coverage.info
+	# for mac
 	lcov --remove coverage.info '/Applications/*' --output-file coverage.info
 	lcov --list coverage.info
 
@@ -73,9 +75,10 @@ codecov:
 	$(MAKE) clean
 
 clean:
-	$(RM) *.o
-	$(RM) a.out
-	$(RM) *.log
+	-rm -Rf *.o
+	-rm -Rf a.out
+	-rm -Rf *.log
+	-rm -Rf $(COVCLEANFILES)
 
 
 
