@@ -1,5 +1,12 @@
 
 
+covapp
+coverage.info
+parser.gcda
+parser.gcno
+tests.gcda
+tests.gcno
+
 # lib
 *.so*
 

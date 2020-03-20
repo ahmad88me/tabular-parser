@@ -3,6 +3,7 @@ CFLAGS= -std=c++11
 LIB = -pthread  
 TLIB = $(LIB) -lgtest
 
+
 parser.out: parser.o main.o
 	$(CC) $(CFLAGS) -o parser.out parser.o main.o
 
@@ -36,17 +37,17 @@ lib:
 	$(MAKE) $(LIBCMAKETARGET)
 
 libmac:
-	$(CC) $(CFLAGS)  -dynamiclib -flat_namespace  parser.cpp -o libtabularparser.so.1.0
+	$(CC) $(CFLAGS)  -dynamiclib -flat_namespace  parser.cpp -o libtabularparser.so.1.1
 
 liblinux:
-	$(CC) $(CFLAGS) -fPIC -shared parser.cpp -o libtabularparser.so.1.0
+	$(CC) $(CFLAGS) -fPIC -shared parser.cpp -o libtabularparser.so.1.1
 
 install:
 	mkdir -p  /usr/local/include/tabular_parser
 	cp parser.h /usr/local/include/tabular_parser/
 	$(MAKE) lib
-	mv libtabularparser.so.1.0 /usr/local/lib/
-	ln -fs /usr/local/lib/libtabularparser.so.1.0 /usr/local/lib/libtabularparser.so
+	mv libtabularparser.so.1.1 /usr/local/lib/
+	ln -fs /usr/local/lib/libtabularparser.so.1.1 /usr/local/lib/libtabularparser.so
 	echo -e "tabular parser is installed"
 	$(MAKE) clean
 
@@ -56,6 +57,7 @@ covnoclean:
 	./covapp
 	lcov --directory . --capture --output-file coverage.info
 	lcov --remove coverage.info '/usr/*' --output-file coverage.info
+	lcov --remove coverage.info '/Applications/*' --output-file coverage.info
 	lcov --list coverage.info
 
 cov:

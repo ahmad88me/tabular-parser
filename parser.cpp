@@ -44,18 +44,45 @@ std::list<std::list<string>*>* Parser::parse(){
                 }
                 //cols->push_back(row);
             }
-            for(auto it=cols->cbegin(); it != cols->cend(); it++){
-                for(auto jt=(*it)->cbegin(); jt != (*it)->cend(); jt++){
-                    cout << *jt << "\t";
-                }
-                cout<<endl;
-            }
-	return cols;	
+//            for(auto it=cols->cbegin(); it != cols->cend(); it++){
+//                for(auto jt=(*it)->cbegin(); jt != (*it)->cend(); jt++){
+//                    cout << *jt << "\t";
+//                }
+//                cout<<endl;
+//            }
     }
     else{
         cout << "Error opening the file\n";
     }
+    return cols;
 }
+
+
+std::list<std::list<string>*>* Parser::parse_vertical(){
+    ifstream in_file(m_file_dir);
+    string line;
+    std::list<std::list<string>*> * rows = new std::list<std::list<string>*>;
+    std::list<string>* row;
+    unsigned long num_of_cols;
+    if(in_file.is_open()){
+        if(getline(in_file, line)){
+            row = this->parse_line(line);
+            rows->push_back(row);
+            num_of_cols = row->size();
+        }
+        while(getline(in_file, line)){
+            row = this->parse_line(line);
+            if(row->size()==num_of_cols){
+                rows->push_back(row);
+            }
+        }
+    }
+    else{
+        cout << "Error opening the file\n";
+    }
+    return rows;
+}
+
 
 std::list<string> * Parser::parse_line(string line){
     std::list<string> *elements = new std::list<string>;
