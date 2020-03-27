@@ -1,3 +1,4 @@
+VERSION = 1.2
 CC = g++
 CFLAGS= -std=c++11
 LIB = -pthread  
@@ -38,17 +39,17 @@ lib:
 	$(MAKE) $(LIBCMAKETARGET)
 
 libmac:
-	$(CC) $(CFLAGS)  -dynamiclib -flat_namespace  parser.cpp -o libtabularparser.so.1.1
+	$(CC) $(CFLAGS)  -dynamiclib -flat_namespace  parser.cpp -o libtabularparser.so.$(VERSION)
 
 liblinux:
-	$(CC) $(CFLAGS) -fPIC -shared parser.cpp -o libtabularparser.so.1.1
+	$(CC) $(CFLAGS) -fPIC -shared parser.cpp -o libtabularparser.so.$(VERSION)
 
 install:
 	mkdir -p  /usr/local/include/tabular_parser
 	cp parser.h /usr/local/include/tabular_parser/
 	$(MAKE) lib
-	mv libtabularparser.so.1.1 /usr/local/lib/
-	ln -fs /usr/local/lib/libtabularparser.so.1.1 /usr/local/lib/libtabularparser.so
+	mv libtabularparser.so.$(VERSION) /usr/local/lib/
+	ln -fs /usr/local/lib/libtabularparser.so.$(VERSION) /usr/local/lib/libtabularparser.so
 	echo -e "tabular parser is installed"
 	$(MAKE) clean
 

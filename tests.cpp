@@ -33,6 +33,16 @@ namespace {
         EXPECT_EQ(3, (*(data->cbegin()))->size());
     }
 
+    TEST(ParserTest, VerticalWithQ) {
+        std::list<std::list<string>*>* data;
+        Parser parser("test-q.csv");
+        data = parser.parse_vertical();
+        cout<< "\n\n data size: ";
+        cout << data->size() << endl;
+        EXPECT_EQ(4, data->size());
+        EXPECT_EQ(3, (*(data->cbegin()))->size());
+    }
+
 }// namespace
 
 int main(int argc, char** argv) {

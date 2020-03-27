@@ -3,7 +3,8 @@
 #include "parser.h"
 
 Parser::Parser(string file_dir){
-    m_escape_chars = "\"\'";
+//    m_escape_chars = "\"\'";
+    m_escape_chars = "\"";
     m_delimiter = ',';
     m_file_dir = file_dir;
 }
@@ -86,16 +87,45 @@ std::list<std::list<string>*>* Parser::parse_vertical(){
 
 std::list<string> * Parser::parse_line(string line){
     std::list<string> *elements = new std::list<string>;
-    int i, start_idx=0;
+    unsigned long long i, start_idx=0,j;
     string t;
+    bool open_escape=false;
+    char null_escape_char='\a'; // this will act as a null, it can by any other character not used
+    char escape_char;
+    escape_char = null_escape_char; // just to check if a escape char
+
+    //cout << "the line: <<"<<line<<">>"<<endl;
+
     for(i=0;i<line.size();i++){
-        if(line[i]==m_delimiter){
+
+        if(escape_char==null_escape_char){
+            //
+            for(j=0;j<m_escape_chars.length();j++){
+                if(line[i]==m_escape_chars[j]){// escape character start
+                    escape_char=m_escape_chars[j];
+                    open_escape = true;
+                }
+            }
+            if(escape_char!=null_escape_char){
+                continue;
+            }
+        }
+        if(line[i]==m_delimiter && !open_escape){
+           //cout << "start_idx: "<< start_idx<< "  of size: "<<(i-start_idx)<<endl;
             t = line.substr(start_idx, i-start_idx);
+            //cout << "printing t: <"<<t<<"> \n";
             elements->push_back(t);
             start_idx = i+1;
         }
+        else if(open_escape && line[i]==escape_char){
+            open_escape = false;
+            escape_char = null_escape_char;
+        }
     }
+    //cout<< "\n\nlist size:" <<line.size()<<endl;
+    //cout << "start_idx: "<< start_idx<<endl;
     t = line.substr(start_idx, line.size()-start_idx);
+    //cout << "printing last t: <"<<t<<">" << endl;
     elements->push_back(t);
     return elements;
 }
