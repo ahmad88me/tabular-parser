@@ -19,7 +19,11 @@ int main()
 
 //      Parser p("test.csv");
 //   Parser p("test-q.csv");
-    Parser p("/Users/aalobaid/workspaces/Pyworkspace/tada-gam/local_data/t2dv2/11688006_0_8123036130090004213.csv");
+    string s;
+    s = "/Users/aalobaid/workspaces/Pyworkspace/tada-gam/local_data/t2dv2/24142265_0_4577466141408796359.csv";
+
+//    Parser p("/Users/aalobaid/workspaces/Pyworkspace/tada-gam/local_data/t2dv2/11688006_0_8123036130090004213.csv");
+    Parser p(s);
     cout << "\nVertical mode: \n"<<endl;
     data = p.parse_vertical();
     for(auto it=data->cbegin();it!=data->cend();it++){
