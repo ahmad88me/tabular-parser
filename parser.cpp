@@ -54,7 +54,7 @@ std::list<std::list<string>*>* Parser::parse() {
         //            }
     }
     else {
-        cout << "Error opening the file\n";
+        cout << "TabularParser> Error opening the file: "<<m_file_dir<<endl;
     }
     return cols;
 }
@@ -80,7 +80,7 @@ std::list<std::list<string>*>* Parser::parse_vertical() {
         }
     }
     else {
-        cout << "Error opening the file\n";
+        cout << "TabularParser> Error opening the file: "<<m_file_dir<<endl;
     }
     return rows;
 }
