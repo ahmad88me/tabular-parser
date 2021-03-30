@@ -2,35 +2,29 @@
 #include "parser.h"
 using namespace std;
 
-int main()
-{
-    cout << "Hello World!" << endl;
-    Parser parser("test.csv");
+int main(int argc, char** argv) {
     std::list<std::list<string>*>* data;
-//    Parser p("test.csv");
-//    cout << "\nHorizonal mode: \n"<<endl;
-//    data = p.parse();
-//    for(auto it=data->cbegin();it!=data->cend();it++){
-//        for(auto jt=(*it)->cbegin();jt!=(*it)->cend();jt++){
-//            cout << (*jt) << " ";
-//        }
-//        cout << endl<<"----------"<<endl;
-//    }
-
-//      Parser p("test.csv");
-//   Parser p("test-q.csv");
-    string s;
-    s = "/Users/aalobaid/workspaces/Pyworkspace/tada-gam/local_data/t2dv2/24142265_0_4577466141408796359.csv";
-
-//    Parser p("/Users/aalobaid/workspaces/Pyworkspace/tada-gam/local_data/t2dv2/11688006_0_8123036130090004213.csv");
-    Parser p(s);
-    cout << "\nVertical mode: \n"<<endl;
-    data = p.parse_vertical();
-    for(auto it=data->cbegin();it!=data->cend();it++){
-        for(auto jt=(*it)->cbegin();jt!=(*it)->cend();jt++){
-            cout << (*jt) << "|\n";
+    string fdir = "test-q.csv";
+    if(argc==2) {
+        fdir = argv[1];
+    }
+    cout << "Parsing: "<<fdir;
+    Parser p(fdir);
+    cout << "\nHorizonal mode: \n"<<endl;
+    data = p.parse();
+    for(auto it=data->cbegin(); it!=data->cend(); it++) {
+        for(auto jt=(*it)->cbegin(); jt!=(*it)->cend(); jt++) {
+            cout << (*jt) << " ";
         }
         cout << endl<<"----------"<<endl;
-    }    return 0;
-
+    }
+    cout << "\nVertical mode: \n"<<endl;
+    data = p.parse_vertical();
+    for(auto it=data->cbegin(); it!=data->cend(); it++) {
+        for(auto jt=(*it)->cbegin(); jt!=(*it)->cend(); jt++) {
+            cout << (*jt) << " ";
+        }
+        cout << endl<<"----------"<<endl;
+    }
+    return 0;
 }
