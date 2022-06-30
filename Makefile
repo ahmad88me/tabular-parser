@@ -53,6 +53,11 @@ install:
 	echo -e "tabular parser is installed"
 	$(MAKE) clean
 
+test:
+	$(CC) ${CFLAGS}  -c -fprofile-arcs -ftest-coverage -fPIC parser.cpp tests.cpp
+	$(CC) -o testapp  -fprofile-arcs -ftest-coverage parser.o tests.o $(TLIB) 
+	./testapp
+
 covnoclean:
 	$(CC) ${CFLAGS}  -c -fprofile-arcs -ftest-coverage -fPIC parser.cpp tests.cpp
 	$(CC) -o covapp  -fprofile-arcs -ftest-coverage parser.o tests.o $(TLIB) 
